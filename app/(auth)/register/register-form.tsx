@@ -5,7 +5,7 @@ import { User, Mail, Lock, Eye, EyeOff, Building2 } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-
+import { authService } from "@/service/auth/auth.service"; 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -30,10 +30,9 @@ const DEPARTMENTS = [
   { id: "8", name: "Customer Service" },
 ] as const;
 
-const API_BASE = "http://localhost:8080/api/v1";
+      const  BASE_API= process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080/api/v1"
 
-// ─── Schema ───────────────────────────────────────────────────────────────────
-
+// ─── Schema ───────────────────────────────────────────── 
 const registerSchema = z
   .object({
     firstName: z
@@ -104,7 +103,7 @@ export function RegisterForm({
     setApiError("");
 
     try {
-      const response = await fetch(`${API_BASE}/auth/register`, {
+      const response = await fetch(`${BASE_API}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -114,7 +113,9 @@ export function RegisterForm({
           departmentId: Number(data.departmentId),
           password: data.password,
         }),
+         
       });
+      console.log("API Response:", response);
 
       const result = await response.json();
 
