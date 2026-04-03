@@ -1,19 +1,24 @@
-// lib/types/material.ts
-export type MaterialType = "pdf" | "slides" | "video" | "document" | "link";
-
-export type AccessLevel = "all" | "department" | "specific";
-
-export interface Material {
+export type Material = {
   id: string;
   title: string;
-  type: MaterialType;
-  sessionId: string;
-  sessionTitle: string;
-  uploadedBy: string;
-  uploadedAt: string;
-  size: string;
-  accessLevel: AccessLevel;
-  description?: string;
-  url?: string;
-  fileName?: string;
-}
+  fileUrl: string;
+  sessionId: number;
+  trainerId: number;
+
+  accessLevel?: "all" | "department" | "specific";
+
+  // ✅ ADD THIS
+  authorizedUsers?: number[];
+
+  // OPTIONAL (for department logic)
+  departmentId?: number;
+
+  // existing fields...
+  sessionTitle?: string;
+  type?: string;
+  size?: string;
+  uploadedBy?: string;
+  uploadedAt?: string;
+
+  
+};

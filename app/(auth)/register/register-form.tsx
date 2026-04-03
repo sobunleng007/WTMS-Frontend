@@ -5,7 +5,6 @@ import { User, Mail, Lock, Eye, EyeOff, Building2 } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { authService } from "@/service/auth/auth.service"; 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -30,9 +29,10 @@ const DEPARTMENTS = [
   { id: "8", name: "Customer Service" },
 ] as const;
 
-      const  BASE_API= process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080/api/v1"
+const BASE_API =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080/api/v1";
 
-// ─── Schema ───────────────────────────────────────────── 
+// ─── Schema ─────────────────────────────────────────────
 const registerSchema = z
   .object({
     firstName: z
@@ -51,7 +51,7 @@ const registerSchema = z
       .max(150, "Cannot exceed 150 characters")
       .regex(
         /^[A-Za-z0-9._%+-]+@gmail\.com$/,
-        "Must be a valid @gmail.com address"
+        "Must be a valid @gmail.com address",
       ),
     departmentId: z.string().min(1, "Please select a department"),
     password: z
@@ -59,7 +59,7 @@ const registerSchema = z
       .min(1, "Password is required")
       .regex(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        "8+ chars, upper, lower, number & special char required"
+        "8+ chars, upper, lower, number & special char required",
       ),
     confirmPassword: z.string().min(1, "Please confirm your password"),
   })
@@ -113,7 +113,6 @@ export function RegisterForm({
           departmentId: Number(data.departmentId),
           password: data.password,
         }),
-         
       });
       console.log("API Response:", response);
 
@@ -121,7 +120,7 @@ export function RegisterForm({
 
       if (!response.ok || !result.success) {
         setApiError(
-          result.message || "Registration failed. Email might already exist."
+          result.message || "Registration failed. Email might already exist.",
         );
         return;
       }
@@ -180,7 +179,9 @@ export function RegisterForm({
                 autoComplete="given-name"
                 {...register("firstName")}
                 className={`h-10 bg-slate-50/50 pl-10 text-sm ${
-                  errors.firstName ? "border-red-400 focus-visible:ring-red-400" : ""
+                  errors.firstName
+                    ? "border-red-400 focus-visible:ring-red-400"
+                    : ""
                 }`}
               />
             </div>
@@ -201,7 +202,9 @@ export function RegisterForm({
                 autoComplete="family-name"
                 {...register("lastName")}
                 className={`h-10 bg-slate-50/50 pl-10 text-sm ${
-                  errors.lastName ? "border-red-400 focus-visible:ring-red-400" : ""
+                  errors.lastName
+                    ? "border-red-400 focus-visible:ring-red-400"
+                    : ""
                 }`}
               />
             </div>
@@ -249,7 +252,9 @@ export function RegisterForm({
                   <SelectTrigger
                     id="department"
                     className={`h-10 bg-slate-50/50 pl-10 text-sm ${
-                      errors.departmentId ? "border-red-400 focus-visible:ring-red-400" : ""
+                      errors.departmentId
+                        ? "border-red-400 focus-visible:ring-red-400"
+                        : ""
                     }`}
                   >
                     <SelectValue placeholder="Select your department" />
@@ -266,7 +271,9 @@ export function RegisterForm({
             />
           </div>
           {errors.departmentId ? (
-            <p className="text-xs text-red-500">{errors.departmentId.message}</p>
+            <p className="text-xs text-red-500">
+              {errors.departmentId.message}
+            </p>
           ) : (
             <p className="text-xs text-slate-400">
               Choose the department you belong to.
@@ -288,7 +295,9 @@ export function RegisterForm({
                 placeholder="Min. 8 characters"
                 {...register("password")}
                 className={`h-10 bg-slate-50/50 pl-10 pr-10 text-sm ${
-                  errors.password ? "border-red-400 focus-visible:ring-red-400" : ""
+                  errors.password
+                    ? "border-red-400 focus-visible:ring-red-400"
+                    : ""
                 }`}
               />
               <button
@@ -321,13 +330,17 @@ export function RegisterForm({
                 placeholder="Re-enter password"
                 {...register("confirmPassword")}
                 className={`h-10 bg-slate-50/50 pl-10 pr-10 text-sm ${
-                  errors.confirmPassword ? "border-red-400 focus-visible:ring-red-400" : ""
+                  errors.confirmPassword
+                    ? "border-red-400 focus-visible:ring-red-400"
+                    : ""
                 }`}
               />
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword((p) => !p)}
-                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                aria-label={
+                  showConfirmPassword ? "Hide password" : "Show password"
+                }
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 transition-colors hover:text-slate-600"
               >
                 {showConfirmPassword ? (
